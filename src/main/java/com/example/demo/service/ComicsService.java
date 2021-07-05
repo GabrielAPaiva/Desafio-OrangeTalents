@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.model.ComicsResponse;
+import com.example.demo.client.ComicsResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

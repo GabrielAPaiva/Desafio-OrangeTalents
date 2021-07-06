@@ -1,26 +1,20 @@
 package com.example.demo.controller;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.example.demo.client.ComicsResponse;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.handlers.FalhaCadastroException;
 import com.example.demo.model.User;
-import com.example.demo.repository.ComicsRepository;
 import com.example.demo.service.ComicsService;
 import com.example.demo.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.repository.UserRepository;
-
-import lombok.AllArgsConstructor;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.util.Optional;
 
 
 @RestController
@@ -63,9 +57,5 @@ public class UserController {
 		}
 	}
 
-//	@GetMapping
-//	public List<User> listar(){
-//		return userRepository.findAll();
-//	}
 
 }

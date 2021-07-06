@@ -56,6 +56,16 @@ public class UserController {
 			return new ResponseEntity("\"Este comic não possui um número de ISBN\"", HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
+	@GetMapping("/user/{id}")
+	ResponseEntity<?> getAllComics(@PathVariable("id") Long id ){
+
+		Optional<User> usuario = service.getUsuario(id);
+
+		if(usuario.isPresent()){
+			return ResponseEntity.ok(usuario);
+		}
+		return ResponseEntity.notFound().build();
+	}
 
 
 }

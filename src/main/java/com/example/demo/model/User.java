@@ -5,25 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.validator.constraints.br.CPF;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-//import org.hibernate.validator.constraints.br.CPF;
-
 import javax.persistence.*;
-//import javax.validation.constraints.Email;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "usuarios")
@@ -50,6 +41,14 @@ public class User {
     public void setNascimento(String nascimento) {
         final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         this.nascimento = LocalDate.parse(nascimento,dtf);
+    }
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn()
+    private List<Comic> comics = new ArrayList<Comic>();
+
+    public void setComics(List<Comic> comics) {
+        this.comics = comics;
     }
 
 

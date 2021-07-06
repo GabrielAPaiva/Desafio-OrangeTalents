@@ -1,52 +1,71 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import java.util.Optional;
 
+import com.example.demo.client.ComicsResponse;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.handlers.FalhaCadastroException;
 import com.example.demo.model.User;
 import com.example.demo.repository.ComicsRepository;
+import com.example.demo.service.ComicsService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("api/v1/comics/")
 public class UserController {
 
 	@Autowired
 	private final UserService service;
 
 	@Autowired
-	private final UserRepository userRepository;
+	private final ComicsService comicsService;
 
-	@GetMapping
-	public List<User> listar(){
-		return userRepository.findAll();
-	}
-
-	@PostMapping("/add")
-	ResponseEntity<?> add(@RequestBody @Valid UserDTO request) throws FalhaCadastroException {
+	@PostMapping("/user/add")
+	ResponseEntity<?> addUser(@RequestBody @Valid UserDTO request) throws FalhaCadastroException {
 
 		User response = service.save(request);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
+	@PostMapping("/{id}/add")
+	@Transactional
+	ResponseEntity<?> addComic(@PathVariable("id") Long id , @RequestParam("comic") Long comicId){
 
+		try{
+			ComicsResponse comicsResponse = comicsService.retornaComics(comicId);
+			var comic  = comicsResponse.toComic();
+
+			Optional<User> usuario = service.getUsuario(id);
+
+			if(usuario.isPresent()){
+				var response =  service.addComic(comic,usuario.get());
+				return ResponseEntity.ok(response);
+			}
+
+			return ResponseEntity.notFound().build();
+		}catch (Exception e){
+			//return ResponseEntity.unprocessableEntity().build();
+			return new ResponseEntity("\"Este comic não possui um número de ISBN\"", HttpStatus.UNPROCESSABLE_ENTITY);
+		}
+	}
+
+//	@GetMapping
+//	public List<User> listar(){
+//		return userRepository.findAll();
+//	}
 
 }

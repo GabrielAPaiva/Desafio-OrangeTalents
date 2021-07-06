@@ -11,14 +11,11 @@ import java.util.List;
 @AllArgsConstructor
 public class Comics {
 
-    //private String code;
-    //private String status;
     private Long id;
     private String title;
     private String isbn;
     private String description;
     private List<Prices> prices;
     private Creators creators;
-    //private Dados data;
 
 }

@@ -15,7 +15,7 @@ public class ComicsController {
 
 
     @GetMapping("/{id}")
-    ResponseEntity<?> getComics(@PathVariable("id") String id){
+    ResponseEntity<?> getComics(@PathVariable("id") Long id){
 
         try{
             ComicsResponse comicsResponse = service.retornaComics(id);

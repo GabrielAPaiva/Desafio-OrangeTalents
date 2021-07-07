@@ -1,65 +1,61 @@
 package com.example.demo.model;
 
-import java.util.Objects;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
-//import org.hibernate.validator.constraints.br.CPF;
-
 import javax.persistence.*;
-//import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 
 @Entity
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = "cpf")})
+@Table(name = "usuarios")
 public class User {
 
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-	
-	@NotBlank(message = "Name is required")
-    private String name;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    //@Email(message = "Invalid e-mail")
-    @Column(unique = true, nullable = false)
+    private String nome;
+
+    @Column(unique = true)
     private String email;
 
-    //@CPF(message = "Invalid CPF")
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String cpf;
 
-    @NotBlank(message = "Birthday is required")
-    private String birthday;
+    @JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
+    private LocalDate nascimento;
 
-    public User(String name, String email, String cpf, String birthday) {
-        this.name = name;
-        this.email = email;
-        this.cpf = cpf;
-        this.birthday = birthday;
+    public void setNascimento(String nascimento) {
+        final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        this.nascimento = LocalDate.parse(nascimento,dtf);
     }
 
-    public User() {
+    @OneToMany(fetch = FetchType.LAZY)
+    private List<Comic> comics = new ArrayList<Comic>();
+
+    public void setComics(List<Comic> comics) {
+        this.comics = comics;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEmail() {
@@ -78,32 +74,15 @@ public class User {
         this.cpf = cpf;
     }
 
-    public String getBirthday() {
-        return birthday;
+    public LocalDate getNascimento() {
+        return nascimento;
     }
 
-    public void setBirthday(String birthday) {
-        this.birthday = birthday;
+    public void setNascimento(LocalDate nascimento) {
+        this.nascimento = nascimento;
     }
-	
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		User other = (User) obj;
-		return Objects.equals(id, other.id);
-	}
-	
-	
-	
+    public List<Comic> getComics() {
+        return comics;
+    }
 }

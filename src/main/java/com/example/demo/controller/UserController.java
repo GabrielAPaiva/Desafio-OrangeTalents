@@ -47,13 +47,21 @@ public class UserController {
 
 			if(usuario.isPresent()){
 				var response =  service.addComic(comic,usuario.get());
-				return ResponseEntity.ok(response);
+				return ResponseEntity.status(HttpStatus.CREATED).body(response);
 			}
 
 			return ResponseEntity.notFound().build();
 		}catch (Exception e){
 			//return ResponseEntity.unprocessableEntity().build();
-			return new ResponseEntity("\"Este comic não possui um número de ISBN\"", HttpStatus.UNPROCESSABLE_ENTITY);
+			String body;
+			ComicsResponse comicsResponse = comicsService.retornaComics(comicId);
+			if (comicsResponse.getData().getResults().get(0).getIsbn().isEmpty()){
+				body = "\"Este comic não possui um número de ISBN\"";
+			}else {
+				body = "\"Este comic já foi adicionado\"";
+			}
+
+			return new ResponseEntity(body, HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 	}
 	@GetMapping("/user/{id}")

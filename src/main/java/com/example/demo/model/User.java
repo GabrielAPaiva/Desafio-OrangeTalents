@@ -1,10 +1,6 @@
 package com.example.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -18,10 +14,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "usuarios")
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -44,12 +36,53 @@ public class User {
     }
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn()
     private List<Comic> comics = new ArrayList<Comic>();
 
     public void setComics(List<Comic> comics) {
         this.comics = comics;
     }
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
+    public LocalDate getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(LocalDate nascimento) {
+        this.nascimento = nascimento;
+    }
+
+    public List<Comic> getComics() {
+        return comics;
+    }
 }

@@ -1,16 +1,12 @@
 package com.example.demo.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.demo.handlers.unique.UniqueValue;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
+
 @Entity
 public class Comic {
 
@@ -33,4 +29,67 @@ public class Comic {
 
     private Boolean desconto;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public Day getDia() {
+        return dia;
+    }
+
+    public void setDia(Day dia) {
+        this.dia = dia;
+    }
+
+    public Boolean getDesconto() {
+        return desconto;
+    }
+
+    public void setDesconto(Boolean desconto) {
+        this.desconto = desconto;
+    }
 }

@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
         try{
             return usuarioRepository.save(usuarioDto.toModel());
         }catch(Exception e){
-            System.out.println(e);
+            //System.out.println(e);
             throw new FalhaCadastroException(e.getMessage());
         }
     }

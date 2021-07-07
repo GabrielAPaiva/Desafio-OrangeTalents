@@ -2,17 +2,12 @@ package com.example.demo.client;
 
 import com.example.demo.model.Comic;
 import com.example.demo.model.Day;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 //@Entity
 public class ComicsResponse {
 
@@ -89,6 +84,29 @@ public class ComicsResponse {
 
     }
 
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Dados getData() {
+        return data;
+    }
+
+    public void setData(Dados data) {
+        this.data = data;
+    }
 }
 
 

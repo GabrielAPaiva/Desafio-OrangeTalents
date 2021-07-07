@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 
-//@Entity
 public class ComicsResponse {
 
     private String code;

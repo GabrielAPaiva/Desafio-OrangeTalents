@@ -6,7 +6,6 @@ import com.example.demo.handlers.FalhaCadastroException;
 import com.example.demo.model.User;
 import com.example.demo.service.ComicsService;
 import com.example.demo.service.UserService;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import java.util.Optional;
 
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("api/v1/comics/")
 public class UserController {
 
@@ -27,6 +25,11 @@ public class UserController {
 
 	@Autowired
 	private final ComicsService comicsService;
+
+	public UserController(UserService service, ComicsService comicsService) {
+		this.service = service;
+		this.comicsService = comicsService;
+	}
 
 	@PostMapping("/user/add")
 	ResponseEntity<?> addUser(@RequestBody @Valid UserDTO request) throws FalhaCadastroException {
@@ -52,16 +55,7 @@ public class UserController {
 
 			return ResponseEntity.notFound().build();
 		}catch (Exception e){
-			//return ResponseEntity.unprocessableEntity().build();
-			String body;
-			ComicsResponse comicsResponse = comicsService.retornaComics(comicId);
-			if (comicsResponse.getData().getResults().get(0).getIsbn().isEmpty()){
-				body = "\"Este comic não possui um número de ISBN\"";
-			}else {
-				body = "\"Este comic já foi adicionado\"";
-			}
-
-			return new ResponseEntity(body, HttpStatus.UNPROCESSABLE_ENTITY);
+			return ResponseEntity.unprocessableEntity().build();
 		}
 	}
 	@GetMapping("/user/{id}")
